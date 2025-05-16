@@ -9,26 +9,26 @@ function History({ user }) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    fetchHistory();
-  }, [user.username]);
-
-  const fetchHistory = async () => {
-    try {
-      const res = await fetch(
-        `https://redzg3wajfqtaoed35g3fpz7gi0hrioy.lambda-url.us-east-1.on.aws/?username=${user.username}`
-      );
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setMessages(data);
-      } else {
-        console.error("Invalid data format:", data);
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `https://redzg3wajfqtaoed35g3fpz7gi0hrioy.lambda-url.us-east-1.on.aws/?username=${user.username}`
+        );
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setMessages(data);
+        } else {
+          console.error("Invalid data format:", data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch history:", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("Failed to fetch history:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchData();
+  }, [user.username]);
 
   const clearHistory = async () => {
     const confirmed = await Swal.fire({
