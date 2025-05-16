@@ -1,36 +1,71 @@
 .App {
-  background: linear-gradient(to right, #e0eafc, #cfdef3);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 .auth-wrapper {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  background-color: white;
-  padding: 40px;
-  min-width: 340px;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
 }
 
 .welcome-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.nav-links {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #0366d6;
+  font-weight: 500;
 }
 
 .signout-btn {
-  padding: 10px 20px;
-  background-color: #047d95;
+  background-color: #ff5851;
   color: white;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 20px;
+  transition: background 0.3s ease;
+  justify-content: space-around;
 }
 
 .signout-btn:hover {
-  background-color: #035f6f;
+  background-color: #e9443d;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.auth-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  justify-content: center;
+}
+
+.sidebar {
+  flex: 0 0 260px;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
 }
