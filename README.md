@@ -1,52 +1,147 @@
-# 🤖 Lex Amplify Assistant – Serverless AI Chatbot on AWS
+# 🤖 LexiBot 
 
-Lex Amplify Assistant is a **full-stack serverless chatbot application** built using **React**, **Amazon Lex V2**, and **AWS Amplify**. It enables authenticated users to chat with a bot, execute AWS tasks (like listing EC2 instances or fetching S3 buckets), and view their personalized chat history stored in **DynamoDB**.
-
----
-
-## 📌 Features
-
-- 🔐 **Cognito Authentication** (Sign up / Sign in)
-- 💬 **Chatbot UI** built with React + Amplify
-- 🤖 **Amazon Lex V2** integration
-- 🧠 **Lambda fulfillment** for AWS commands:
-  - `List EC2 Instances`
-  - `Start / Stop EC2 Instance`
-  - `Describe VPCs`
-  - `List S3 Buckets`
-- 🗂 **DynamoDB logging** of messages per user
-- 🕓 **Chat history** view with delete option
-- 🧾 **Command menu** to guide users on how to interact
-- 🌐 **Deployed with Amplify Hosting + CI/CD**
+Lex Amplify Assistant is a **serverless AI assistant** that integrates **Amazon Lex V2**, **Lambda**, **Cognito**, and **DynamoDB**, built on a **React** frontend using **AWS Amplify**. The bot allows users to sign in, execute AWS operations (like managing EC2, VPCs, and S3), and view/delete their chat history.
 
 ---
 
-## 🧠 Architecture
+## 🎬 Demo
 
+![Demo](frontend/preview-lexa.gif)
+
+---
+## 📐 Architecture Overview
+
+```plaintext
+                  ┌──────────────────┐
+     Chat Input → │   React Frontend │
+                  └────────┬─────────┘
+                           ↓
+                ┌────────────────────┐
+                │   Amazon Lex V2    │
+                └──────┬──────┬──────┘
+                       ↓      ↓
+         ┌──────────────┐   ┌───────────────────────┐
+         │ AWS Lambda    │   │  Cognito Authentication│
+         └────┬──────────┘   └───────────────────────┘
+              ↓
+      ┌──────────────┐
+      │ Amazon EC2   │
+      │ Amazon VPC   │ ← AWS Fulfillment
+      │ Amazon S3    │
+      └──────┬───────┘
+             ↓
+      ┌──────────────┐
+      │ DynamoDB     │ ← Message logs (per user)
+      └──────────────┘
+````
+
+---
+
+## ⚙️ Features
+
+| Feature            | Description                                     |
+| ------------------ | ----------------------------------------------- |
+| 🛡 Auth            | Cognito User Pools (Sign up, Sign in, Sign out) |
+| 🤖 AI Bot          | Lex V2 integration with multiple intents        |
+| 🧠 Fulfillment     | Unified Lambda function for all AWS tasks       |
+| 💬 Chat UI         | Responsive UI with typing indicator             |
+| 📚 Chat History    | Per-user message logs with delete option        |
+| 🧾 Sample Commands | Sidebar with guided examples                    |
+| 🚀 Hosting & CI/CD | Amplify GitHub integration                      |
+
+---
+
+## 🧰 Technologies
+
+* **Frontend**: React, Amplify UI
+* **Bot**: Amazon Lex V2
+* **Backend**: AWS Lambda, DynamoDB
+* **Authentication**: Amazon Cognito
+* **Hosting**: AWS Amplify (CI/CD from GitHub)
+* **Styling**: CSS Modules
+* **UX Tools**: SweetAlert2, Typing animation
+
+---
+
+## 📦 Setup Guide
+
+### 1. Clone Project
+
+```bash
+git clone https://github.com/YOUR_USERNAME/lex-amplify-assistant.git
+cd frontend
+npm install
 ```
 
-React (Frontend) ←→ Amazon Lex V2 ←→ AWS Lambda ←→ AWS Services
-↑
-Cognito Auth via Amplify
-↑
-Chat Logs to DynamoDB
+---
 
+### 2. Initialize Amplify
+
+```bash
+amplify configure
+amplify init
 ```
 
 ---
 
-## 🚀 Technologies Used
+### 3. Add Required Services
 
-| Category     | Services & Tools                       |
-|--------------|----------------------------------------|
-| Frontend     | React, Amplify UI Authenticator        |
-| Auth         | Amazon Cognito                         |
-| Chatbot      | Amazon Lex V2                          |
-| Functions    | AWS Lambda                             |
-| Storage      | Amazon DynamoDB                        |
-| Deployment   | AWS Amplify (Hosting + CI/CD)          |
-| Styling      | CSS Modules                            |
+```bash
+amplify add auth        # Cognito User Pool
+amplify add hosting     # Amplify Hosting
+amplify push            # Deploy backend config
+```
 
+> ✅ Make sure the `amplifyconfiguration.json` and `aws-exports.js` are generated and imported.
+
+---
+
+### 4. Setup Lex and Lambda Fulfillment
+
+* Go to **Amazon Lex V2 Console**
+* Create a bot with the following **intents**:
+
+  * `ListEC2InstancesIntent`
+  * `StartEC2InstanceIntent`
+  * `StopEC2InstanceIntent`
+  * `DescribeVPCsIntent`
+  * `ListS3BucketsIntent`
+* Create a single **Lambda function** to handle all intents and return responses.
+* Add the function’s ARN as the fulfillment Lambda to each intent.
+* Give **`amplify-<env>-authRole`** permission for:
+
+  * `lex:RecognizeText`
+  * `dynamodb:*`
+  * `ec2:*`
+  * `s3:*`
+
+---
+
+## ✏️ Lex Sample Utterances
+
+```txt
+Intent: ListEC2InstancesIntent
+- list my ec2 instances
+- show my instances
+- display all ec2
+
+Intent: StartEC2InstanceIntent
+- start instance i-0123456789abcdef
+- please start EC2 i-0123456789abcdef
+
+Intent: StopEC2InstanceIntent
+- stop instance i-0123456789abcdef
+- shutdown i-0123456789abcdef
+
+Intent: DescribeVPCsIntent
+- describe vpcs
+- show my virtual private clouds
+
+Intent: ListS3BucketsIntent
+- list my buckets
+- show s3 buckets
+- get all s3 storage
+```
 ---
 
 ## 🛠 Project Structure
@@ -65,76 +160,69 @@ frontend/
 
 ---
 
-## 📦 Setup Instructions
+## 🎬 Demo
 
-### 1. Clone the repo
+![Demo](./screens/demo.gif)
 
-```bash
-git clone https://github.com/yourusername/lex-amplify-assistant.git
-cd frontend
-npm install
-````
+---
 
-### 2. Configure Amplify CLI
+## 🚀 Deploy to Amplify Hosting
 
-```bash
-amplify configure
-amplify init
-```
+1. Push to GitHub
+2. Go to [AWS Amplify Console](https://console.aws.amazon.com/amplify/)
+3. Connect repository and branch
+4. Use the following build settings:
 
-### 3. Add Auth & Hosting
-
-```bash
-amplify add auth
-amplify add hosting
-amplify push
-```
-
-### 4. Connect to Lex & Lambda
-
-* Create a Lex bot (with intents like `ListEC2InstancesIntent`, `StopEC2InstanceIntent`, etc.)
-* Add a Lambda function to fulfill Lex requests
-* Attach `AmazonLexFullAccess` to your `amplify-*-authRole`
-
-### 5. Run locally
-
-```bash
-npm run start
+```yaml
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - npm ci
+        - npm run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
 ```
 
 ---
 
-## ✅ Sample Lex Utterances
+## 🔐 IAM Notes
 
-| Intent             | Example Inputs                |
-| ------------------ | ----------------------------- |
-| `ListEC2Instances` | "list my ec2 instances"       |
-| `StartEC2Instance` | "start instance i-0abc123456" |
-| `StopEC2Instance`  | "stop instance i-0abc123456"  |
-| `DescribeVPCs`     | "show my VPCs"                |
-| `ListS3Buckets`    | "get all S3 buckets"          |
+> To avoid `AccessDeniedException` for Lex, make sure your `amplify-frontend-authRole` includes:
 
----
-
-## 📂 Environment Variables
-
-No `.env` file needed — all configs handled via `aws-exports.js` from Amplify CLI.
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "lex:RecognizeText"
+  ],
+  "Resource": "*"
+}
+```
 
 ---
 
-## 💡 UX Features
+## ❌ Common Issues
 
-* Copy-to-clipboard command menu
-* Scrollable chat history with timestamps
-* Styled alerts via `SweetAlert2`
-* Chat typing animation indicator
-* Responsive design
+| Issue                             | Fix                                                       |
+| --------------------------------- | --------------------------------------------------------- |
+| `User pool client does not exist` | Re-run `amplify pull` or recreate user pool               |
+| `CORS error from Lambda URL`      | Add CORS headers in Lambda: `Access-Control-Allow-Origin` |
+| `403 Forbidden from Lex`          | Add `lex:RecognizeText` to auth role                      |
 
 ---
 
-## 📌 Known Issues
+## 🧠 Future Enhancements
 
-* Make sure the correct IAM Role has `lex:RecognizeText` permission
-* If user pool is deleted, re-run `amplify pull` or `amplify update auth`
+* Multi-region bot support
+* Chat context awareness (sessions)
+* Support for more AWS services
+* Admin dashboard
 
 ---
