@@ -3,14 +3,13 @@
   background-color: #f9fafb;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   font-family: "Segoe UI", sans-serif;
   color: #111827;
   max-height: 600px;
   overflow-y: auto;
 }
 
-.command-menu h4 {
+.menu-header {
   font-size: 1.1rem;
   margin-bottom: 12px;
   font-weight: 600;
@@ -61,4 +60,76 @@
 
 .copy-btn:hover {
   color: #1e40af;
+}
+
+@media (max-width: 768px) {
+  .command-menu {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .accordion-header {
+    font-size: 1rem;
+  }
+
+  .command-group ul li {
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .copy-btn {
+    font-size: 0.85rem;
+  }
+
+  .menu-header {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container,
+  .auth-wrapper,
+  .app-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .main-content,
+  .sidebar {
+    width: 100%;
+  }
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  background-color: #ffffff;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sticky-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.top-bar {
+  z-index: 1030;
+}
+
+.accordion-header.clickable {
+  cursor: pointer;
+  transition: background 0.2s ease;
+  padding: 6px 0;
+}
+
+.accordion-header.clickable:hover {
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  padding: 6px;
 }
