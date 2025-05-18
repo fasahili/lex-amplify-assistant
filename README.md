@@ -58,7 +58,7 @@ Lex Amplify Assistant is a **serverless AI assistant** that integrates **Amazon 
 * **Backend**: AWS Lambda, DynamoDB
 * **Authentication**: Amazon Cognito
 * **Hosting**: AWS Amplify (CI/CD from GitHub)
-* **Styling**: CSS Modules
+* **Styling**: Bootstrap 5
 * **UX Tools**: SweetAlert2, Typing animation
 
 ---
