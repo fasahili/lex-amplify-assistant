@@ -160,11 +160,6 @@ frontend/
 
 ---
 
-## 🎬 Demo
-
-![Demo](./screens/demo.gif)
-
----
 
 ## 🚀 Deploy to Amplify Hosting
 
