@@ -6,7 +6,7 @@ Lex Amplify Assistant is a **serverless AI assistant** that integrates **Amazon 
 
 ## 🎬 Demo
 
-![Demo](frontend/preview-lexa.gif)
+![Demo](frontend/src/assets/gif-lexi.gif)
 
 ---
 ## 📐 Architecture Overview
